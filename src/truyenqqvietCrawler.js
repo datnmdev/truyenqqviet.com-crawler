@@ -40,7 +40,7 @@ const nettruyenCrawler = async (url, fromPage, toPage) => {
                         const storyName = $storyInfo($storyInfo('.book_info .book_other h1')[0]).text() // Tên truyện
 
                         try {
-                            const path = `${process.cwd()}/truyenqqviet_2/${storyName}.json`
+                            const path = `${process.cwd()}/truyenqqviet/${storyName.replace(/[<>:"\/\\|?*+\[\]\{\}%]/g, '').replace(/[\s.]+$/, '')}.json`
                             await fs.promises.access(path, fs.constants.F_OK)
                             const data = require(path)
                             data.link = url+link
@@ -99,7 +99,7 @@ const nettruyenCrawler = async (url, fromPage, toPage) => {
                             chapters: chapterTMP
                         }
                         console.log(data);
-                        await fs.promises.writeFile(`${process.cwd()}/truyenqqviet_2/${storyName}.json`, JSON.stringify(data))
+                        await fs.promises.writeFile(`${process.cwd()}/truyenqqviet/${storyName.replace(/[<>:"\/\\|?*+\[\]\{\}%]/g, '').replace(/[\s.]+$/, '')}.json`, JSON.stringify(data))
                     } catch (error) {
                         await refetchStoryInfo(storyNumber, link)
                     }
@@ -126,4 +126,4 @@ const nettruyenCrawler = async (url, fromPage, toPage) => {
     }
 }
 
-nettruyenCrawler(url, 11, 20)
+nettruyenCrawler(url, 1, 10)
